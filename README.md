@@ -20,7 +20,7 @@ Use these collections to explore, test and integrate LNB APIs directly from Post
 
 - [Postman](https://www.postman.com/downloads/) installed (desktop app recommended)
 - A valid **Le New Black account**
-- A **Client ID** and **Client Secret** obtained from the [LNB Developer Portal](https://developer.lenewblack.com)
+- A **Client ID** and **Client Secret** obtained from [Le New Black](https://www.lenewblack.com)
 
 ---
 
@@ -44,12 +44,12 @@ Download and install the Postman desktop app from [postman.com/downloads](https:
 2. Create a new environment (e.g. `LNB Production`)
 3. Add the following variables:
 
-| Variable | Description | Example |
-|---|---|---|
-| `base_url` | LNB API base URL | `https://api.lenewblack.com` |
-| `client_id` | Your Client ID from the Developer Portal | `your-client-id` |
-| `client_secret` | Your Client Secret from the Developer Portal | `your-client-secret` |
-| `access_token` | Populated automatically after authentication | *(leave empty)* |
+| Variable | Description | Example                                 |
+|---|---|-----------------------------------------|
+| `base_url` | LNB API base URL | `https://www.lenewblack.com/apis/<api>` |
+| `client_id` | Your Client ID from the Developer Portal | `your-client-id`                        |
+| `client_secret` | Your Client Secret from the Developer Portal | `your-client-secret`                    |
+| `access_token` | Populated automatically after authentication | *(leave empty)*                         |
 
 4. Save the environment and select it in the top-right dropdown
 
@@ -81,8 +81,8 @@ For the full API reference, visit the [LNB Developer Portal](https://developer.l
 
 ## Getting Your API Credentials
 
-1. Log in to the [LNB Developer Portal](https://developer.lenewblack.com)
-2. Navigate to **Applications** and create a new app
+1. Log in to your Le New Black account: [Le New Black](https://www.lenewblack.com) or your private showroom URL
+2. Navigate to **Settings** to get your credentials
 3. Copy your **Client ID** and **Client Secret**
 4. Add them to your Postman environment as described above
 
