@@ -1,0 +1,859 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Le New Black Retailer API",
+    "version": "1.0.0",
+    "description": "Complete Retailer API documentation"
+  },
+  "servers": [
+    {
+      "url": "https://www.lenewblack.com/apis/retail",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "oauth2_access_token": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Appointments"
+    },
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Orders"
+    },
+    {
+      "name": "Selections"
+    },
+    {
+      "name": "Version"
+    }
+  ],
+  "paths": {
+    "/appointments": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get appointments",
+        "description": "Get all appointments",
+        "operationId": "getAllAppointments",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetailerContacts"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/appointments/{id}": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get appointment",
+        "description": "Get an appointment by its id",
+        "operationId": "getAppointmentById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetailerContact"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Retrieve authentication token",
+        "description": "You must use this endpoint to obtain an access token and be able to request every other endpoints of this API.",
+        "operationId": "authenticate",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthToken"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "422": {
+            "description": "Missing parameters or invalid grant type"
+          },
+          "429": {
+            "$ref": "#/components/responses/AuthRateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get orders",
+        "description": "Get all orders",
+        "operationId": "getAllOrders",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetailerOrders"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order by id",
+        "description": "Get an order by its id",
+        "operationId": "getOrderById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetailerOrder"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/selections": {
+      "get": {
+        "tags": [
+          "Selections"
+        ],
+        "summary": "Get selections",
+        "description": "Get all selections",
+        "operationId": "getAllSelections",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetailerSelections"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/selections/{id}": {
+      "get": {
+        "tags": [
+          "Selections"
+        ],
+        "summary": "Get selection by id",
+        "description": "Get a selection by its id",
+        "operationId": "getSelectionById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetailerSelection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "tags": [
+          "Version"
+        ],
+        "summary": "Get API version",
+        "description": "Get API version info",
+        "operationId": "getVersion",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiVersion"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2_access_token": {
+        "type": "apiKey",
+        "name": "access_token",
+        "in": "query",
+        "description": "OAuth 2.0 access token"
+      }
+    },
+    "schemas": {
+      "ApiVersion": {
+        "title": "ApiVersion",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AuthToken": {
+        "title": "AuthToken",
+        "properties": {
+          "access_token": {
+            "description": "A token to be added as a query parameter to every subsequent API request. This token will authorize and authenticate your API requests.",
+            "type": "string"
+          },
+          "expire_on": {
+            "description": "A date-time indicating when the token will expire.",
+            "type": "string"
+          },
+          "scope": {
+            "description": "A scope for this token. This is currently always set to 'retailer'.",
+            "type": "string",
+            "default": "Brand"
+          },
+          "token_type": {
+            "description": "A type for this token. This is currently always set to 'Bearer'.",
+            "type": "string",
+            "default": "Bearer"
+          }
+        },
+        "type": "object"
+      },
+      "AuthTokenRequest": {
+        "title": "AuthTokenRequest",
+        "properties": {
+          "client_id": {
+            "description": "A client id as provided in your Le New Black account.",
+            "type": "string"
+          },
+          "client_secret": {
+            "description": "A client secret as provided in your Le New Black account.",
+            "type": "string"
+          },
+          "grant_type": {
+            "description": "The authentication type being used. Must always be 'client_credentials'.",
+            "type": "string",
+            "default": "client_credentials"
+          }
+        },
+        "type": "object"
+      },
+      "RetailerContact": {
+        "title": "RetailerContact",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "brand_name": {
+            "type": "string"
+          },
+          "buyer_last_name": {
+            "type": "string"
+          },
+          "buyer_first_name": {
+            "type": "string"
+          },
+          "buyer_email": {
+            "type": "string"
+          },
+          "season": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "attendees_total": {
+            "type": "integer"
+          },
+          "schedule_from_time": {
+            "type": "string"
+          },
+          "schedule_to_time": {
+            "type": "string"
+          },
+          "done_from_time": {
+            "type": "string"
+          },
+          "done_to_time": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RetailerContacts": {
+        "title": "RetailerContacts",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RetailerContact"
+        }
+      },
+      "RetailerOrder": {
+        "title": "RetailerOrder",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "confirmation_time": {
+            "type": "string"
+          },
+          "cancellation_time": {
+            "type": "string"
+          },
+          "delivery_start_on": {
+            "type": "string"
+          },
+          "delivery_end_on": {
+            "type": "string"
+          },
+          "notify_email": {
+            "type": "string"
+          },
+          "notify_email_cc": {
+            "type": "string"
+          },
+          "notify_message": {
+            "type": "string"
+          },
+          "brand_name": {
+            "type": "string"
+          },
+          "buyer_name": {
+            "type": "string"
+          },
+          "buyer_first_name": {
+            "type": "string"
+          },
+          "buyer_email": {
+            "type": "string"
+          },
+          "sales_person_name": {
+            "type": "string"
+          },
+          "sales_person_first_name": {
+            "type": "string"
+          },
+          "sales_person_email": {
+            "type": "string"
+          },
+          "price_total": {
+            "type": "number"
+          },
+          "price_total_prediscount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "examples": [
+              "EUR"
+            ]
+          },
+          "discount_rate": {
+            "type": "number"
+          },
+          "delivery_incoterm_ref": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "examples": [
+              "Confirmed"
+            ]
+          },
+          "terms": {
+            "type": "string"
+          },
+          "terms_of_delivery": {
+            "type": "string"
+          },
+          "terms_of_payment": {
+            "type": "string"
+          },
+          "billing_address": {
+            "type": "object"
+          },
+          "delivery_address": {
+            "type": "object"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetailerOrderItem"
+            }
+          },
+          "lines_extra": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetailerOrderLineExtra"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "RetailerOrderItem": {
+        "title": "RetailerOrderItem",
+        "properties": {
+          "create_time": {
+            "type": "string"
+          },
+          "product_model": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "variant_reference": {
+            "type": "string"
+          },
+          "variant_name": {
+            "type": "string"
+          },
+          "size_name": {
+            "type": "string",
+            "examples": [
+              "XS"
+            ]
+          },
+          "unit_price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "ean13": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RetailerOrderLineExtra": {
+        "title": "RetailerOrderLineExtra",
+        "properties": {
+          "product_model": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "variant_reference": {
+            "type": "string"
+          },
+          "variant_name": {
+            "type": "string"
+          },
+          "bulk_quantity": {
+            "type": "integer"
+          },
+          "comment": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RetailerOrders": {
+        "title": "RetailerOrders",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RetailerOrder"
+        }
+      },
+      "RetailerSelection": {
+        "title": "RetailerSelection",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "brand_name": {
+            "type": "string"
+          },
+          "buyer_name": {
+            "type": "string"
+          },
+          "buyer_first_name": {
+            "type": "string"
+          },
+          "buyer_email": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetailerSelectionItem"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "RetailerSelectionItem": {
+        "title": "RetailerSelectionItem",
+        "properties": {
+          "product_model": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "variant_reference": {
+            "type": "string"
+          },
+          "variant_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RetailerSelections": {
+        "title": "RetailerSelections",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/RetailerSelection"
+        }
+      }
+    },
+    "responses": {
+      "AuthRateLimitExceeded": {
+        "description": "Too many credential exchanges for this client id in one minute. This limit applies before the client secret is checked and is separate from the per-token limit below.",
+        "headers": {
+          "Retry-After": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Seconds to wait before retrying"
+          }
+        }
+      },
+      "RateLimitExceeded": {
+        "description": "API call rate limit has been exceeded (60 requests per minute per token)",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum requests allowed per minute"
+          },
+          "X-RateLimit-Remaining": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Requests remaining in current window (0 when exceeded)"
+          },
+          "X-RateLimit-Reset": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Unix timestamp when the window resets"
+          },
+          "X-RateLimit-Reset-Time": {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "ISO 8601 timestamp when the window resets"
+          },
+          "Retry-After": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Seconds to wait before retrying"
+          },
+          "X-RateLimit-Request-Count": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Current request count in window"
+          },
+          "X-RateLimit-Request-Period": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Internal period identifier"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 429
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "API call rate limit has been exceeded."
+                    },
+                    "message_user_friendly": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "UserException"
+                    }
+                  }
+                },
+                "response": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-rate-limiting": {
+    "description": "All API endpoints are subject to rate limiting on a per-token basis. The rate limit is enforced using a 60-second sliding window. Every API response includes rate limit headers, even when the limit is not exceeded.\n",
+    "default-limit": 60,
+    "window": "60s",
+    "scope": "per access_token (global, not per endpoint)",
+    "headers": {
+      "X-RateLimit-Limit": {
+        "description": "Maximum number of requests allowed per minute",
+        "example": 60
+      },
+      "X-RateLimit-Remaining": {
+        "description": "Number of requests remaining in the current window",
+        "example": 42
+      },
+      "X-RateLimit-Reset": {
+        "description": "Unix timestamp when the current window resets",
+        "example": 1743696540
+      },
+      "X-RateLimit-Reset-Time": {
+        "description": "ISO 8601 timestamp when the current window resets",
+        "example": "2025-04-02T14:22:00+0100"
+      },
+      "Retry-After": {
+        "description": "Seconds to wait before retrying (only relevant on 429)",
+        "example": 45
+      },
+      "X-RateLimit-Request-Count": {
+        "description": "Current request count in the active window",
+        "example": 18
+      },
+      "X-RateLimit-Request-Period": {
+        "description": "Internal period identifier (unix timestamp / 60)",
+        "example": 29061609
+      }
+    },
+    "error-response": {
+      "status": 429,
+      "body": {
+        "error": {
+          "code": 429,
+          "message": "API call rate limit has been exceeded.",
+          "message_user_friendly": "",
+          "type": "UserException"
+        },
+        "response": null
+      }
+    }
+  }
+}

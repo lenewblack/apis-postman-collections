@@ -1,0 +1,5619 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Le New Black Wholesale API",
+    "version": "1.1.0",
+    "description": "Complete Wholesale API v1 documentation"
+  },
+  "servers": [
+    {
+      "url": "https://www.lenewblack.com/apis/api",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "oauth2_access_token": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Appointments"
+    },
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Categories"
+    },
+    {
+      "name": "Collections"
+    },
+    {
+      "name": "Fabrics"
+    },
+    {
+      "name": "Inventory"
+    },
+    {
+      "name": "Lines"
+    },
+    {
+      "name": "Materials"
+    },
+    {
+      "name": "Orders"
+    },
+    {
+      "name": "Price lists"
+    },
+    {
+      "name": "Products"
+    },
+    {
+      "name": "Retailers"
+    },
+    {
+      "name": "Selections"
+    },
+    {
+      "name": "Sizings"
+    },
+    {
+      "name": "Version"
+    }
+  ],
+  "paths": {
+    "/appointments": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get appointments",
+        "description": "Get all appointments",
+        "operationId": "getAllAppointments",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contacts"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Create appointment (n/a)",
+        "description": "Create an appointment (not available)",
+        "operationId": "createAppointment",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "dummy": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/appointments/{id}": {
+      "get": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Get appointment",
+        "description": "Get an appointment by its id",
+        "operationId": "getAppointmentById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Appointments"
+        ],
+        "summary": "Update appointment (n/a)",
+        "description": "Update an appointment (not available)",
+        "operationId": "updateAppointment",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "dummy": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Retrieve authentication token",
+        "description": "You must use this endpoint to obtain an access token and be able to request every other endpoints of this API.",
+        "operationId": "authenticate",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthToken"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "422": {
+            "description": "Missing parameters or invalid grant type"
+          },
+          "429": {
+            "$ref": "#/components/responses/AuthRateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get categories",
+        "description": "Get all categories",
+        "operationId": "getAllCategories",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categories"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create category",
+        "description": "Create a category",
+        "operationId": "createCategory",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "external_name": {
+                    "type": "string"
+                  },
+                  "extra_1": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryCreationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get category",
+        "description": "Get a category by its id",
+        "operationId": "getCategoryById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update category",
+        "description": "Update a category",
+        "operationId": "updateCategory",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "external_name": {
+                    "type": "string"
+                  },
+                  "extra_1": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryCreationResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryCreationResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/collections": {
+      "get": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Get collections",
+        "description": "Get all collections",
+        "operationId": "getAllCollections",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collections"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Create collection",
+        "description": "Create a collection",
+        "operationId": "createCollection",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "preview",
+                      "order",
+                      "view",
+                      "archived"
+                    ]
+                  },
+                  "privacy_level": {
+                    "type": "string",
+                    "enum": [
+                      "open",
+                      "restricted"
+                    ]
+                  },
+                  "close_on": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "delivery_start_on": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "delivery_end_on": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "payment_terms": {
+                    "type": "string"
+                  },
+                  "external_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/collections/{id}": {
+      "get": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Get collection by id",
+        "description": "Get a collection by its id",
+        "operationId": "getCollectionById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Update collection",
+        "description": "Update a collection",
+        "operationId": "updateCollection",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "preview",
+                      "order",
+                      "view",
+                      "archived"
+                    ]
+                  },
+                  "privacy_level": {
+                    "type": "string",
+                    "enum": [
+                      "open",
+                      "restricted"
+                    ]
+                  },
+                  "close_on": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "delivery_start_on": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "delivery_end_on": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "payment_terms": {
+                    "type": "string"
+                  },
+                  "external_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collection"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/collections/{id}/categories": {
+      "get": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Get collection categories",
+        "description": "Get all categories of a collection",
+        "operationId": "getCollectionCategories",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionCategories"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Assign category to collection",
+        "description": "Assign a category to a collection",
+        "operationId": "createCollectionCategory",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "ordering": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionCategory"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/collections/{id}/categories/{category_id}": {
+      "patch": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Update collection category",
+        "description": "Update the category of a collection",
+        "operationId": "updateCollectionCategory",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionCategory"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionCategory"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/fabrics": {
+      "get": {
+        "tags": [
+          "Fabrics"
+        ],
+        "summary": "Get fabrics",
+        "description": "Get all fabrics",
+        "operationId": "getAllFabrics",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fabrics"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Fabrics"
+        ],
+        "summary": "Create fabric",
+        "description": "Create a fabric",
+        "operationId": "createFabric",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "external_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fabric"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/fabrics/{id}": {
+      "get": {
+        "tags": [
+          "Fabrics"
+        ],
+        "summary": "Get fabric by id",
+        "description": "Get a fabric by its id",
+        "operationId": "getFabricById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fabric"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Fabrics"
+        ],
+        "summary": "Update fabric",
+        "description": "Update a fabric",
+        "operationId": "updateFabric",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "external_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fabric"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fabric"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/inventory": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory",
+        "description": "Get the inventory details by products",
+        "operationId": "getInventoryByProducts",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventoryList"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/inventory/ean13s": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory by EAN13s",
+        "description": "Get the inventory details by EAN13s",
+        "operationId": "getInventoryByEAN13s",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventorySkuList"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Create inventories by EAN13",
+        "description": "Replace the inventory details for a given set of EAN13s",
+        "operationId": "createInventoryItemsByEAN13",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "quantities": {
+                    "description": "Associative array whose keys are EAN13s",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/InventorySkuPostItem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/inventory/ean13s/{ean13}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory by EAN13",
+        "description": "Get the inventory for a given item by its EAN13",
+        "operationId": "getInventoryByEAN13",
+        "parameters": [
+          {
+            "name": "ean13",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventorySkuItem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Create inventory by EAN13",
+        "description": "Replace the inventory details of a given item identified by its EAN13",
+        "operationId": "createInventoryItemByEAN13",
+        "parameters": [
+          {
+            "name": "ean13",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "in_stock": {
+                    "type": "integer"
+                  },
+                  "in_stock_update_time": {
+                    "description": "UTC",
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/inventory/skus": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory by SKUs",
+        "description": "Get the inventory details by SKUs",
+        "operationId": "getInventoryBySKUs",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventorySkuList"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Create inventories by SKU",
+        "description": "Replace the inventory details for a given set of SKUs",
+        "operationId": "createInventoryItemsBySKU",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "quantities": {
+                    "description": "Associative array whose keys are SKUs",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/InventorySkuPostItem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/inventory/skus/{sku}": {
+      "get": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Get inventory by SKU",
+        "description": "Get the inventory for a given item by its SKU",
+        "operationId": "getInventoryBySKU",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventorySkuItem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Create inventory by SKU",
+        "description": "Replace the inventory details of a given item identified by its SKU",
+        "operationId": "createInventoryItemBySKU",
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "in_stock": {
+                    "type": "integer"
+                  },
+                  "in_stock_update_time": {
+                    "description": "UTC",
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/lines": {
+      "get": {
+        "tags": [
+          "Lines"
+        ],
+        "summary": "Get lines",
+        "description": "Get all lines",
+        "operationId": "getAllLines",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lines"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Lines"
+        ],
+        "summary": "Create line",
+        "description": "Create a line",
+        "operationId": "createLine",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Line"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/lines/{id}": {
+      "get": {
+        "tags": [
+          "Lines"
+        ],
+        "summary": "Get line by id",
+        "description": "Get a line by its id",
+        "operationId": "getLineById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Line"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Lines"
+        ],
+        "summary": "Update line",
+        "description": "Update a line",
+        "operationId": "updateLine",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Line"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Line"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/materials": {
+      "get": {
+        "tags": [
+          "Materials"
+        ],
+        "summary": "Get materials",
+        "description": "Get all materials",
+        "operationId": "getAllMaterials",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Materials"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Materials"
+        ],
+        "summary": "Create material",
+        "description": "Create a material",
+        "operationId": "createMaterial",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Material"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/materials/{id}": {
+      "get": {
+        "tags": [
+          "Materials"
+        ],
+        "summary": "Get material by id",
+        "description": "Get a material by its id",
+        "operationId": "getMaterialById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Material"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Materials"
+        ],
+        "summary": "Update material",
+        "description": "Update a material",
+        "operationId": "updateMaterial",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Material"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Material"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get orders",
+        "description": "Get all orders",
+        "operationId": "getAllOrders",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to fetch (500 orders per page, starts at page 1)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": "1"
+            }
+          },
+          {
+            "name": "order_time_from",
+            "in": "query",
+            "description": "Get orders placed after this date (example: 2018-01-15)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order_time_to",
+            "in": "query",
+            "description": "Get orders placed before this date (example: 2018-01-18)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "confirmation_time_from",
+            "in": "query",
+            "description": "Get orders confirmed after this date (example: 2018-01-25)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "confirmation_time_to",
+            "in": "query",
+            "description": "Get orders confirmed before this date (example: 2018-01-28)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Get orders in this status (possible values: draft, pending, confirmed, invoicing, closed, canceled)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Orders"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order by id",
+        "description": "Get an order by its id",
+        "operationId": "getOrderById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Update order",
+        "description": "Update an order",
+        "operationId": "updateOrder",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "status": {
+                    "description": "Possible values: confirmed, invoicing, closed",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/orders_confirmation": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Confirm order",
+        "description": "Confirms an order",
+        "operationId": "confirmOrder",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderConfirmations"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderConfirmations"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/price_catalogs": {
+      "get": {
+        "tags": [
+          "Price lists"
+        ],
+        "summary": "Get price lists",
+        "description": "Get all price lists",
+        "operationId": "getAllPriceCatalogs",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceCatalogs"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/price_catalogs/{id}": {
+      "get": {
+        "tags": [
+          "Price lists"
+        ],
+        "summary": "Get price list by id",
+        "description": "Get a price list by its id",
+        "operationId": "getPriceCatalogById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceCatalog"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get products",
+        "description": "Get all products",
+        "operationId": "getAllProducts",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "collection_id",
+            "in": "query",
+            "description": "Get products of this collection",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create product (n/a)",
+        "description": "Create a product (not available)",
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostProduct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get product by id",
+        "description": "Get a product by its id",
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update product",
+        "description": "Update product",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostProduct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/products/{id}/variants": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get product variants of a product",
+        "description": "Get all product variants of a product",
+        "operationId": "getProductVariantsByProduct",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductVariants"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/products/{id}/variants/{fabric_id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get product variant by id",
+        "description": "Get a product variant by its id",
+        "operationId": "getProductVariantById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fabric_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductVariant"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create variant (n/a)",
+        "description": "Update a variant (not available)",
+        "operationId": "createProductVariant",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fabric_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductVariant"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update variant",
+        "description": "Update variant",
+        "operationId": "updateProductVariant",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fabric_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostProductVariant"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductVariant"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductVariant"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/products/{id}/variants/{fabric_id}/prices": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get all prices of a product variant",
+        "description": "Get all prices of a product variant",
+        "operationId": "getPricesByProductVariant",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fabric_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prices"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Define prices of a product variant (n/a)",
+        "description": "Define all prices of a product variant (not available)",
+        "operationId": "createPricesByProductVariant",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fabric_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPrices"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Prices"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/products/{id}/variants/{fabric_id}/sizes": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get ean13s by product variant (n/a)",
+        "description": "Get ean13s by product variant id (not available)",
+        "operationId": "getSkuItemsByProductVariant",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fabric_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkuItems"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Assign ean13s to product (n/a)",
+        "description": "Assign ean13s to product variant by sizes (not available)",
+        "operationId": "updateSkuItemsByProductVariant",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fabric_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkuItems"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/retailers": {
+      "get": {
+        "tags": [
+          "Retailers"
+        ],
+        "summary": "Get retailers",
+        "description": "Get all retailers",
+        "operationId": "getAllRetailers",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Retailers"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Retailers"
+        ],
+        "summary": "Create retailer (n/a)",
+        "description": "Create a retailer (not available)",
+        "operationId": "createRetailer",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Retailer"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/retailers/{id}": {
+      "get": {
+        "tags": [
+          "Retailers"
+        ],
+        "summary": "Get retailer",
+        "description": "Get a retailer by its id. Pass retailer_key=reference to resolve the path segment as a retailer reference rather than as an id",
+        "operationId": "getRetailerById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "retailer_key",
+            "in": "query",
+            "description": "Set to 'reference' to look the retailer up by its reference instead of its id",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "reference"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Retailer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Retailers"
+        ],
+        "summary": "Update retailer (n/a)",
+        "description": "Update a retailer (not available)",
+        "operationId": "updateRetailer",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Retailer"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Retailer"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/retailers/{id}/members": {
+      "post": {
+        "tags": [
+          "Retailers"
+        ],
+        "summary": "Create retailer member (n/a)",
+        "description": "Create a retailer member (not available)",
+        "operationId": "createRetailerMember",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Member"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/selections": {
+      "get": {
+        "tags": [
+          "Selections"
+        ],
+        "summary": "Get selections",
+        "description": "Get all selections",
+        "operationId": "getAllSelections",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Selections"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/selections/{id}": {
+      "get": {
+        "tags": [
+          "Selections"
+        ],
+        "summary": "Get selection by id",
+        "description": "Get a selection by its id",
+        "operationId": "getSelectionById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Selection"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/sizings": {
+      "get": {
+        "tags": [
+          "Sizings"
+        ],
+        "summary": "Get sizings",
+        "description": "Get all sizings",
+        "operationId": "getAllSizings",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sizings"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sizings"
+        ],
+        "summary": "Create sizing (n/a)",
+        "description": "Create a sizing (not available)",
+        "operationId": "createSizing",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sizing"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid data"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/sizings/{id}": {
+      "get": {
+        "tags": [
+          "Sizings"
+        ],
+        "summary": "Get sizing by id",
+        "description": "Get a sizing by its id",
+        "operationId": "getSizingById",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sizing"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Sizings"
+        ],
+        "summary": "Update sizing (n/a)",
+        "description": "Update a sizing (not available)",
+        "operationId": "updateSizing",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "description": "The access token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sizing"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sizing"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "tags": [
+          "Version"
+        ],
+        "summary": "Get API version",
+        "description": "Get API version info",
+        "operationId": "getVersion",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiVersion"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2_access_token": {
+        "type": "apiKey",
+        "name": "access_token",
+        "in": "query",
+        "description": "OAuth 2.0 access token"
+      }
+    },
+    "schemas": {
+      "Address": {
+        "title": "Address",
+        "required": [
+          "reference",
+          "company",
+          "country"
+        ],
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "contact_name": {
+            "type": "string"
+          },
+          "contact_email": {
+            "type": "string"
+          },
+          "tel": {
+            "type": "string"
+          },
+          "address_1": {
+            "type": "string"
+          },
+          "address_2": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "vat_number": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiVersion": {
+        "title": "ApiVersion",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AuthToken": {
+        "title": "AuthToken",
+        "properties": {
+          "access_token": {
+            "description": "A token to be added as a query parameter to every subsequent API request. This token will authorize and authenticate your API requests.",
+            "type": "string"
+          },
+          "expire_on": {
+            "description": "A date-time indicating when the token will expire.",
+            "type": "string"
+          },
+          "scope": {
+            "description": "A scope for this token. This is currently always set to 'brand'.",
+            "type": "string",
+            "default": "Brand"
+          },
+          "token_type": {
+            "description": "A type for this token. This is currently always set to 'Bearer'.",
+            "type": "string",
+            "default": "Bearer"
+          }
+        },
+        "type": "object"
+      },
+      "AuthTokenRequest": {
+        "title": "AuthTokenRequest",
+        "required": [
+          "client_id",
+          "client_secret",
+          "grant_type"
+        ],
+        "properties": {
+          "client_id": {
+            "description": "A client id as provided in your Le New Black account.",
+            "type": "string"
+          },
+          "client_secret": {
+            "description": "A client secret as provided in your Le New Black account.",
+            "type": "string"
+          },
+          "grant_type": {
+            "description": "The authentication type being used. Must always be 'client_credentials'.",
+            "type": "string",
+            "default": "client_credentials"
+          }
+        },
+        "type": "object"
+      },
+      "BillingAddress": {
+        "title": "BillingAddress",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "contact_name": {
+            "type": "string"
+          },
+          "contact_email": {
+            "type": "string"
+          },
+          "tel": {
+            "type": "string"
+          },
+          "address_1": {
+            "type": "string"
+          },
+          "address_2": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "vat_number": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Categories": {
+        "title": "Categories",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Category"
+        }
+      },
+      "Category": {
+        "title": "Category",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "external_name": {
+            "type": "string"
+          },
+          "extra_1": {
+            "type": "string"
+          },
+          "collections": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "CategoryCreationResponse": {
+        "title": "CategoryCreationResponse",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Collection": {
+        "title": "Collection",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "publish_time": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "privacy_level": {
+            "type": "string"
+          },
+          "enable_inventory": {
+            "type": "boolean"
+          },
+          "image_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.jpg"
+            ]
+          },
+          "close_on": {
+            "type": "string"
+          },
+          "delivery_start_on": {
+            "type": "string"
+          },
+          "delivery_end_on": {
+            "type": "string"
+          },
+          "payment_terms": {
+            "type": "string"
+          },
+          "is_expired": {
+            "type": "boolean"
+          },
+          "external_name": {
+            "type": "string"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PostCategory"
+            }
+          },
+          "fabrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PostColor"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "CollectionCategories": {
+        "title": "CollectionCategories",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CollectionCategory"
+        }
+      },
+      "CollectionCategory": {
+        "title": "CollectionCategory",
+        "properties": {
+          "id": {
+            "description": "Category id",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "PANTS"
+            ]
+          },
+          "ordering": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "Collections": {
+        "title": "Collections",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Collection"
+        }
+      },
+      "Contact": {
+        "title": "Contact",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "retailer_reference": {
+            "type": "string"
+          },
+          "retailer_name": {
+            "type": "string"
+          },
+          "buyer_last_name": {
+            "type": "string"
+          },
+          "buyer_first_name": {
+            "type": "string"
+          },
+          "buyer_email": {
+            "type": "string"
+          },
+          "season": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "attendees_total": {
+            "type": "integer"
+          },
+          "schedule_from_time": {
+            "type": "string"
+          },
+          "schedule_to_time": {
+            "type": "string"
+          },
+          "done_from_time": {
+            "type": "string"
+          },
+          "done_to_time": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Contacts": {
+        "title": "Contacts",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Contact"
+        }
+      },
+      "DeliveryAddress": {
+        "title": "DeliveryAddress",
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "contact_name": {
+            "type": "string"
+          },
+          "contact_email": {
+            "type": "string"
+          },
+          "tel": {
+            "type": "string"
+          },
+          "address_1": {
+            "type": "string"
+          },
+          "address_2": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Fabric": {
+        "title": "Fabric",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "Floral print"
+            ]
+          },
+          "color_code": {
+            "type": "string",
+            "examples": [
+              "100"
+            ]
+          },
+          "color_name": {
+            "type": "string",
+            "examples": [
+              "Blue"
+            ]
+          },
+          "material_code": {
+            "type": "string",
+            "examples": [
+              "WOO"
+            ]
+          },
+          "material_name": {
+            "type": "string",
+            "examples": [
+              "Wool"
+            ]
+          },
+          "image_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "external_name": {
+            "type": "string",
+            "examples": [
+              "FLORAL-PRINT"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "Fabrics": {
+        "title": "Fabrics",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Fabric"
+        }
+      },
+      "InventoryItem": {
+        "title": "InventoryItem",
+        "properties": {
+          "name": {
+            "type": "string",
+            "examples": [
+              "Denim jeans"
+            ]
+          },
+          "total": {
+            "$ref": "#/components/schemas/Stock"
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SmallVariant"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "InventoryList": {
+        "title": "InventoryList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/InventoryItem"
+        }
+      },
+      "InventorySkuItem": {
+        "title": "InventorySkuItem",
+        "properties": {
+          "in_stock_update_time": {
+            "description": "UTC",
+            "type": "string",
+            "format": "date-time"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Stock"
+          }
+        },
+        "type": "object"
+      },
+      "InventorySkuList": {
+        "title": "InventorySkuList",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/InventorySkuItem"
+        }
+      },
+      "InventorySkuPostItem": {
+        "title": "InventorySkuPostItem",
+        "properties": {
+          "in_stock": {
+            "type": "integer"
+          },
+          "in_stock_update_time": {
+            "description": "UTC",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "type": "object"
+      },
+      "InvoicingAddress": {
+        "title": "InvoicingAddress",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "contact_name": {
+            "type": "string"
+          },
+          "contact_email": {
+            "type": "string"
+          },
+          "tel": {
+            "type": "string"
+          },
+          "address_1": {
+            "type": "string"
+          },
+          "address_2": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "vat_number": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Line": {
+        "title": "Line",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "Menswear"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "Lines": {
+        "title": "Lines",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Line"
+        }
+      },
+      "Material": {
+        "title": "Material",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "examples": [
+              "LEA"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "Leather"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "Materials": {
+        "title": "Materials",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Material"
+        }
+      },
+      "Member": {
+        "title": "Member",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Order": {
+        "title": "Order",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "order_time": {
+            "type": "string"
+          },
+          "confirmation_time": {
+            "type": "string"
+          },
+          "cancellation_time": {
+            "type": "string"
+          },
+          "price_catalog_id": {
+            "type": "integer"
+          },
+          "assigned_collection_id": {
+            "type": "integer"
+          },
+          "price_catalog": {
+            "$ref": "#/components/schemas/PriceCatalog"
+          },
+          "sales_catalog": {
+            "$ref": "#/components/schemas/SalesCatalog"
+          },
+          "line_id": {
+            "type": "integer"
+          },
+          "season_id": {
+            "type": "integer"
+          },
+          "auto_cancel_on": {
+            "type": "string"
+          },
+          "delivery_start_on": {
+            "type": "string"
+          },
+          "delivery_end_on": {
+            "type": "string"
+          },
+          "notify_message": {
+            "type": "string"
+          },
+          "purchase_order_reference": {
+            "type": "string"
+          },
+          "sales_order_reference": {
+            "type": "string"
+          },
+          "retailer_reference": {
+            "type": "string"
+          },
+          "retailer_name": {
+            "type": "string"
+          },
+          "buyer_name": {
+            "type": "string"
+          },
+          "buyer_first_name": {
+            "type": "string"
+          },
+          "buyer_email": {
+            "type": "string"
+          },
+          "sales_person_name": {
+            "type": "string"
+          },
+          "sales_person_first_name": {
+            "type": "string"
+          },
+          "sales_person_email": {
+            "type": "string"
+          },
+          "selection_id": {
+            "type": "integer"
+          },
+          "price_total": {
+            "type": "number"
+          },
+          "price_total_prediscount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "examples": [
+              "EUR"
+            ]
+          },
+          "discount_rate": {
+            "type": "number"
+          },
+          "delivery_incoterm_ref": {
+            "type": "string"
+          },
+          "inventory_tracking": {
+            "type": "boolean"
+          },
+          "order_name": {
+            "type": "string"
+          },
+          "order_mode": {
+            "type": "string"
+          },
+          "order_type": {
+            "type": "string",
+            "examples": [
+              "Pre-order"
+            ]
+          },
+          "order_picking": {
+            "type": "string",
+            "examples": [
+              "deferred"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Open for brand",
+              "Open for buyer",
+              "Confirmed",
+              "Canceled",
+              "Invoicing",
+              "Closed"
+            ]
+          },
+          "payment_collecting_status": {
+            "type": "string",
+            "enum": [
+              "disabled",
+              "due",
+              "overdue",
+              "collected"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          },
+          "terms_of_delivery": {
+            "type": "string"
+          },
+          "terms_of_payment": {
+            "type": "string"
+          },
+          "retailer_extra_1": {
+            "type": "string"
+          },
+          "retailer_extra_2": {
+            "type": "string"
+          },
+          "retailer_extra_3": {
+            "type": "string"
+          },
+          "retailer_extra_4": {
+            "type": "string"
+          },
+          "retailer_extra_5": {
+            "type": "string"
+          },
+          "invoicing_address": {
+            "$ref": "#/components/schemas/InvoicingAddress"
+          },
+          "billing_address": {
+            "$ref": "#/components/schemas/BillingAddress"
+          },
+          "delivery_address": {
+            "$ref": "#/components/schemas/DeliveryAddress"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "OrderConfirmation": {
+        "title": "OrderConfirmation",
+        "properties": {
+          "order_id": {
+            "type": "integer"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderConfirmationLine"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "OrderConfirmationLine": {
+        "title": "OrderConfirmationLine",
+        "properties": {
+          "ean13": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "OrderConfirmations": {
+        "title": "OrderConfirmations",
+        "properties": {
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderConfirmation"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "OrderItem": {
+        "title": "OrderItem",
+        "properties": {
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "confirmation_time": {
+            "type": "string"
+          },
+          "collection_name": {
+            "type": "string",
+            "examples": [
+              "SS17 men"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "Classic shirt"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "examples": [
+              "1234"
+            ]
+          },
+          "color": {
+            "type": "string",
+            "examples": [
+              "BLACK"
+            ]
+          },
+          "size": {
+            "type": "string",
+            "examples": [
+              "XS"
+            ]
+          },
+          "recommended_retail_price": {
+            "type": "number"
+          },
+          "unit_price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "ean13": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Orders": {
+        "title": "Orders",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Order"
+        }
+      },
+      "PostCategory": {
+        "title": "PostCategory",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "DRESSES"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "PostColor": {
+        "title": "PostColor",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "examples": [
+              "ss16_04"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "mottled grey"
+            ]
+          },
+          "image_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "PostPrice": {
+        "title": "PostPrice",
+        "properties": {
+          "price_catalog_id": {
+            "type": "integer"
+          },
+          "recommended_retail_price": {
+            "type": "number",
+            "examples": [
+              "200.0"
+            ]
+          },
+          "wholesale_price": {
+            "type": "number",
+            "examples": [
+              "75.0"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "PostPrices": {
+        "title": "PostPrices",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PostPrice"
+        }
+      },
+      "PostProduct": {
+        "title": "PostProduct",
+        "properties": {
+          "model": {
+            "type": "string",
+            "examples": [
+              "MODEL001"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "CLASSIC SHIRT"
+            ]
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "is_new": {
+            "type": "boolean"
+          },
+          "is_top": {
+            "type": "boolean"
+          },
+          "order_min": {
+            "type": "integer"
+          },
+          "order_max": {
+            "type": "integer"
+          },
+          "order_multiple": {
+            "type": "integer"
+          },
+          "extra_1": {
+            "type": "string"
+          },
+          "extra_2": {
+            "type": "string"
+          },
+          "extra_3": {
+            "type": "string"
+          },
+          "extra_4": {
+            "type": "string"
+          },
+          "extra_5": {
+            "type": "string"
+          },
+          "extra_6": {
+            "type": "string"
+          },
+          "extra_7": {
+            "type": "string"
+          },
+          "extra_8": {
+            "type": "string"
+          },
+          "extra_9": {
+            "type": "string"
+          },
+          "external_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PostProductVariant": {
+        "title": "PostProductVariant",
+        "properties": {
+          "is_available": {
+            "type": "boolean",
+            "default": true
+          },
+          "is_blocked": {
+            "type": "boolean",
+            "default": false
+          },
+          "reference": {
+            "type": "string",
+            "examples": [
+              "ABC101"
+            ]
+          },
+          "care_instruction": {
+            "type": "string"
+          },
+          "composition": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "fabric_print": {
+            "type": "string"
+          },
+          "lining": {
+            "type": "string"
+          },
+          "made_in": {
+            "type": "string",
+            "examples": [
+              "Spain"
+            ]
+          },
+          "dimensions": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "string"
+          },
+          "available_on": {
+            "type": "string",
+            "examples": [
+              "2016-11-04"
+            ]
+          },
+          "show_looks": {
+            "type": "string"
+          },
+          "showroom_availability": {
+            "type": "boolean",
+            "default": true
+          },
+          "special_notice": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Price": {
+        "title": "Price",
+        "properties": {
+          "catalog_id": {
+            "type": "integer",
+            "examples": [
+              "865"
+            ]
+          },
+          "catalog_code": {
+            "type": "string",
+            "examples": [
+              "EUR-GBP-EXW"
+            ]
+          },
+          "recommended_retail_price": {
+            "type": "number",
+            "examples": [
+              "195.50"
+            ]
+          },
+          "wholesale_price": {
+            "type": "number",
+            "examples": [
+              "75.00"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "PriceCatalog": {
+        "title": "PriceCatalog",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string",
+            "format": "ISO-4217"
+          }
+        },
+        "type": "object"
+      },
+      "PriceCatalogs": {
+        "title": "PriceCatalogs",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PriceCatalog"
+        }
+      },
+      "Prices": {
+        "title": "Prices",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Price"
+        }
+      },
+      "Product": {
+        "title": "Product",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "category_id": {
+            "type": "integer"
+          },
+          "collection_id": {
+            "type": "integer"
+          },
+          "default_color_id": {
+            "type": "integer"
+          },
+          "sizes": {
+            "type": "string",
+            "examples": [
+              "XS,S,M,L,XL"
+            ]
+          },
+          "model": {
+            "type": "string",
+            "examples": [
+              "MODEL001"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "examples": [
+              "CLASSIC SHIRT"
+            ]
+          },
+          "is_new": {
+            "type": "boolean"
+          },
+          "is_top": {
+            "type": "boolean"
+          },
+          "order_min": {
+            "type": "integer"
+          },
+          "order_max": {
+            "type": "integer"
+          },
+          "order_multiple": {
+            "type": "integer"
+          },
+          "extra_1": {
+            "type": "string"
+          },
+          "extra_2": {
+            "type": "string"
+          },
+          "extra_3": {
+            "type": "string"
+          },
+          "extra_4": {
+            "type": "string"
+          },
+          "extra_5": {
+            "type": "string"
+          },
+          "extra_6": {
+            "type": "string"
+          },
+          "extra_7": {
+            "type": "string"
+          },
+          "extra_8": {
+            "type": "string"
+          },
+          "extra_9": {
+            "type": "string"
+          },
+          "external_name": {
+            "type": "string"
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductVariant"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "ProductVariant": {
+        "title": "ProductVariant",
+        "properties": {
+          "fabric_id": {
+            "type": "integer"
+          },
+          "fabric_name": {
+            "type": "string",
+            "examples": [
+              "navy"
+            ]
+          },
+          "fabric_code": {
+            "type": "string"
+          },
+          "fabric_image": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "is_available": {
+            "type": "boolean",
+            "default": true
+          },
+          "is_blocked": {
+            "type": "boolean",
+            "default": false
+          },
+          "reference": {
+            "type": "string",
+            "examples": [
+              "ABC101"
+            ]
+          },
+          "care_instruction": {
+            "type": "string"
+          },
+          "composition": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "fabric_print": {
+            "type": "string"
+          },
+          "lining": {
+            "type": "string"
+          },
+          "made_in": {
+            "type": "string",
+            "examples": [
+              "Spain"
+            ]
+          },
+          "dimensions": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "string"
+          },
+          "available_on": {
+            "type": "string",
+            "examples": [
+              "2016-11-04"
+            ]
+          },
+          "show_looks": {
+            "type": "string"
+          },
+          "showroom_availability": {
+            "type": "boolean",
+            "default": true
+          },
+          "special_notice": {
+            "type": "string"
+          },
+          "image_1_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "image_2_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "image_3_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "image_4_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "image_5_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "image_6_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "image_7_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "image_8_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.png"
+            ]
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Price"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "ProductVariants": {
+        "title": "ProductVariants",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ProductVariant"
+        }
+      },
+      "Products": {
+        "title": "Products",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Product"
+        }
+      },
+      "Retailer": {
+        "title": "Retailer",
+        "properties": {
+          "update_time": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "catalog_id": {
+            "type": "integer"
+          },
+          "delivery_incoterm": {
+            "type": "string"
+          },
+          "discount_rate": {
+            "type": "number"
+          },
+          "discount_special_rate": {
+            "type": "number"
+          },
+          "terms_of_delivery": {
+            "type": "string"
+          },
+          "terms_of_payment": {
+            "type": "string"
+          },
+          "extra_1": {
+            "type": "string"
+          },
+          "extra_2": {
+            "type": "string"
+          },
+          "extra_3": {
+            "type": "string"
+          },
+          "extra_4": {
+            "type": "string"
+          },
+          "extra_5": {
+            "type": "string"
+          },
+          "extra_6": {
+            "type": "string"
+          },
+          "extra_7": {
+            "type": "string"
+          },
+          "extra_8": {
+            "type": "string"
+          },
+          "extra_9": {
+            "type": "string"
+          },
+          "store_address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "billing_address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "delivery_addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            }
+          },
+          "buyers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            }
+          },
+          "contact_groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetailerSegment"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "RetailerSegment": {
+        "title": "RetailerSegment",
+        "properties": {
+          "segment_id": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "Retailers": {
+        "title": "Retailers",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Retailer"
+        }
+      },
+      "SalesCatalog": {
+        "title": "SalesCatalog",
+        "properties": {
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "publish_time": {
+            "type": "string"
+          },
+          "code": {
+            "description": "Identifier",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "line_name": {
+            "type": "string",
+            "examples": [
+              "Women"
+            ]
+          },
+          "season_name": {
+            "type": "string",
+            "examples": [
+              "SS17"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "preview",
+              "order",
+              "view",
+              "archived"
+            ]
+          },
+          "privacy_level": {
+            "type": "string",
+            "enum": [
+              "open",
+              "restricted"
+            ]
+          },
+          "enable_inventory": {
+            "type": "boolean"
+          },
+          "image_url": {
+            "type": "string",
+            "examples": [
+              "https://www.lenewblack.com/path/to/image.jpg"
+            ]
+          },
+          "close_on": {
+            "type": "string",
+            "examples": [
+              "2018-06-21"
+            ]
+          },
+          "delivery_start_on": {
+            "type": "string",
+            "examples": [
+              "2018-06-21"
+            ]
+          },
+          "delivery_end_on": {
+            "type": "string",
+            "examples": [
+              "2018-06-21"
+            ]
+          },
+          "payment_terms": {
+            "type": "string"
+          },
+          "extra_1": {
+            "type": "string"
+          },
+          "extra_2": {
+            "type": "string"
+          },
+          "extra_3": {
+            "type": "string"
+          },
+          "extra_4": {
+            "type": "string"
+          },
+          "extra_5": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Selection": {
+        "title": "Selection",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string"
+          },
+          "update_time": {
+            "type": "string"
+          },
+          "last_view_time": {
+            "type": "string"
+          },
+          "retailer_reference": {
+            "type": "string"
+          },
+          "retailer_name": {
+            "type": "string"
+          },
+          "buyer_name": {
+            "type": "string"
+          },
+          "buyer_first_name": {
+            "type": "string"
+          },
+          "buyer_email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "examples": [
+              "Viewed"
+            ]
+          },
+          "comment": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SelectionItem"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "SelectionItem": {
+        "title": "SelectionItem",
+        "properties": {
+          "product_id": {
+            "type": "integer"
+          },
+          "color_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string",
+            "examples": [
+              "BLACK"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "Selections": {
+        "title": "Selections",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Selection"
+        }
+      },
+      "Sizing": {
+        "title": "Sizing",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "size_0": {
+            "type": "string"
+          },
+          "size_1": {
+            "type": "string"
+          },
+          "size_2": {
+            "type": "string"
+          },
+          "size_3": {
+            "type": "string"
+          },
+          "size_4": {
+            "type": "string"
+          },
+          "size_5": {
+            "type": "string"
+          },
+          "size_6": {
+            "type": "string"
+          },
+          "size_7": {
+            "type": "string"
+          },
+          "size_8": {
+            "type": "string"
+          },
+          "size_9": {
+            "type": "string"
+          },
+          "size_10": {
+            "type": "string"
+          },
+          "size_11": {
+            "type": "string"
+          },
+          "size_12": {
+            "type": "string"
+          },
+          "size_13": {
+            "type": "string"
+          },
+          "size_14": {
+            "type": "string"
+          },
+          "size_15": {
+            "type": "string"
+          },
+          "size_16": {
+            "type": "string"
+          },
+          "size_17": {
+            "type": "string"
+          },
+          "size_18": {
+            "type": "string"
+          },
+          "size_19": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Sizings": {
+        "title": "Sizings",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Sizing"
+        }
+      },
+      "SkuItem": {
+        "title": "SkuItem",
+        "properties": {
+          "ean13": {
+            "type": "string",
+            "format": "EAN-13"
+          },
+          "sku": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "SkuItems": {
+        "title": "SkuItems",
+        "description": "Associative array whose keys are sizes",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SkuItem"
+        },
+        "examples": [
+          "{'XS':{...},'S':{...},'M':{...}}"
+        ]
+      },
+      "SmallSize": {
+        "title": "SmallSize",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "ean13": {
+            "type": "string"
+          },
+          "in_stock_update_time": {
+            "type": "string"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Stock"
+          }
+        }
+      },
+      "SmallVariant": {
+        "title": "SmallVariant",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "total": {
+            "$ref": "#/components/schemas/Stock"
+          },
+          "sizes": {
+            "$ref": "#/components/schemas/SmallSize"
+          }
+        },
+        "type": "object"
+      },
+      "Stock": {
+        "title": "Stock",
+        "properties": {
+          "in_stock": {
+            "type": "integer"
+          },
+          "allocated": {
+            "type": "integer"
+          },
+          "on_hand": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "responses": {
+      "AuthRateLimitExceeded": {
+        "description": "Too many credential exchanges for this client id in one minute. This limit applies before the client secret is checked and is separate from the per-token limit below.",
+        "headers": {
+          "Retry-After": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Seconds to wait before retrying"
+          }
+        }
+      },
+      "RateLimitExceeded": {
+        "description": "API call rate limit has been exceeded (60 requests per minute per token)",
+        "headers": {
+          "X-RateLimit-Limit": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum requests allowed per minute"
+          },
+          "X-RateLimit-Remaining": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Requests remaining in current window (0 when exceeded)"
+          },
+          "X-RateLimit-Reset": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Unix timestamp when the window resets"
+          },
+          "X-RateLimit-Reset-Time": {
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "ISO 8601 timestamp when the window resets"
+          },
+          "Retry-After": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Seconds to wait before retrying"
+          },
+          "X-RateLimit-Request-Count": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Current request count in window"
+          },
+          "X-RateLimit-Request-Period": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Internal period identifier"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 429
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "API call rate limit has been exceeded."
+                    },
+                    "message_user_friendly": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "UserException"
+                    }
+                  }
+                },
+                "response": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-rate-limiting": {
+    "description": "All API endpoints are subject to rate limiting on a per-token basis. The rate limit is enforced using a 60-second sliding window. Every API response includes rate limit headers, even when the limit is not exceeded.\n",
+    "default-limit": 60,
+    "window": "60s",
+    "scope": "per access_token (global, not per endpoint)",
+    "headers": {
+      "X-RateLimit-Limit": {
+        "description": "Maximum number of requests allowed per minute",
+        "example": 60
+      },
+      "X-RateLimit-Remaining": {
+        "description": "Number of requests remaining in the current window",
+        "example": 42
+      },
+      "X-RateLimit-Reset": {
+        "description": "Unix timestamp when the current window resets",
+        "example": 1743696540
+      },
+      "X-RateLimit-Reset-Time": {
+        "description": "ISO 8601 timestamp when the current window resets",
+        "example": "2025-04-02T14:22:00+0100"
+      },
+      "Retry-After": {
+        "description": "Seconds to wait before retrying (only relevant on 429)",
+        "example": 45
+      },
+      "X-RateLimit-Request-Count": {
+        "description": "Current request count in the active window",
+        "example": 18
+      },
+      "X-RateLimit-Request-Period": {
+        "description": "Internal period identifier (unix timestamp / 60)",
+        "example": 29061609
+      }
+    },
+    "error-response": {
+      "status": 429,
+      "body": {
+        "error": {
+          "code": 429,
+          "message": "API call rate limit has been exceeded.",
+          "message_user_friendly": "",
+          "type": "UserException"
+        },
+        "response": null
+      }
+    }
+  }
+}
