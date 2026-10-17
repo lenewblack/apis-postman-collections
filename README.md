@@ -12,6 +12,8 @@ Use these collections to explore, test and integrate LNB APIs directly from Post
 | Collection | Description | Status |
 |---|---|---|
 | **Wholesale v2 API** | Full access to your wholesale data — orders, products, buyers, catalogues, etc. | ✅ Available |
+| **Wholesale v1 API** | Previous version of the Wholesale API — products, collections, inventory, orders, retailers, etc. | ✅ Available |
+| **Retail API** | Read access for retailers — orders, appointments and selections | ✅ Available |
 | More coming soon... | Additional LNB APIs will be added over time | 🔜 |
 
 ---
