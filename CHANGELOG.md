@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- `openapi/wholesale-v2/`: the file of every published **Wholesale v2 API** version, from 2.0 (2018) to 2.31.0, Swagger 2.0 up to 2.24.0 and OpenAPI 3.1 from 2.25.0
 - **Wholesale v1 API** collection (`api-postman-collection-lnb-wholesale-v1.json`), OpenAPI 3.1
 - **Retail API** collection (`api-postman-collection-lnb-retail.json`), OpenAPI 3.1
 

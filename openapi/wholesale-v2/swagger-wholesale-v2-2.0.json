@@ -1,0 +1,2108 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Lenewblack Wholesale API",
+        "version": "2.0"
+    },
+    "basePath": "/apis/wholesale/v2",
+    "paths": {
+        "/version": {
+            "get": {
+                "summary": "Get API version",
+                "description": "Get API version info",
+                "operationId": "getVersion",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ApiVersion"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/token": {
+            "post": {
+                "summary": "Retrieve authentication token",
+                "description": "You must use this endpoint to obtain an access token and be able to request every other endpoints of this API.",
+                "operationId": "authenticate",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/AuthTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/AuthToken"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "422": {
+                        "description": "Missing parameters or invalid grant type"
+                    }
+                }
+            }
+        },
+        "/collections": {
+            "get": {
+                "summary": "Get collections",
+                "description": "Get all collections",
+                "operationId": "getAllCollections",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Collections"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Set collection",
+                "description": "Set a collection",
+                "operationId": "setCollection",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SetCollectionRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Collection"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "description": "Error messages if the object could not be created/updated",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collections/{code}": {
+            "get": {
+                "summary": "Get collection by code",
+                "description": "Get collection by code",
+                "operationId": "getCollectionByCode",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Collection"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/multi/collections": {
+            "post": {
+                "summary": "Set multiple collections",
+                "description": "Set multiple collections",
+                "operationId": "setMultipleCollections",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetCollectionRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetCollectionResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/inventory": {
+            "get": {
+                "summary": "Get inventory",
+                "description": "Get full inventory",
+                "operationId": "getFullInventory",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/InventoryItems"
+                        }
+                    }
+                }
+            }
+        },
+        "/inventory/sku/{sku}": {
+            "get": {
+                "summary": "Get inventory by SKU",
+                "description": "Get inventory by SKU",
+                "operationId": "getInventoryBySKU",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sku",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/InventoryItem"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/inventory/ean/{ean13}": {
+            "get": {
+                "summary": "Get inventory by EAN13",
+                "description": "Get inventory by EAN13",
+                "operationId": "getInventoryByEAN",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ean13",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/InventoryItem"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/inventory/sku": {
+            "post": {
+                "summary": "Set stock level by SKU",
+                "description": "Set stock level by SKU",
+                "operationId": "setInventoryBySku",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InventorySKUItem"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/InventoryItem"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "description": "Error messages if the object could not be created/updated",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inventory/ean": {
+            "post": {
+                "summary": "Set stock level by EAN",
+                "description": "Set stock level by EAN",
+                "operationId": "setInventoryByEAN",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InventoryEANItem"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/InventoryItem"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "description": "Error messages if the object could not be created/updated",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/multi/inventory/sku": {
+            "post": {
+                "summary": "Set multiple inventory by SKU",
+                "description": "Set multiple inventory by SKU",
+                "operationId": "setMultipleInventoryBySKU",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetInventorySKURequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetInventoryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/multi/inventory/ean": {
+            "post": {
+                "summary": "Set multiple inventory by EAN",
+                "description": "Set multiple inventory by EAN",
+                "operationId": "setMultipleInventoryByEAN",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetInventoryEANRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetInventoryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/prices": {
+            "get": {
+                "summary": "Get prices",
+                "description": "Get all prices",
+                "operationId": "getAllPrices",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Prices"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Set price",
+                "description": "Set a price",
+                "operationId": "setPrice",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Price"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Price"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "description": "Error messages if the object could not be created/updated",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/multi/prices": {
+            "post": {
+                "summary": "Set multiple price",
+                "description": "Set multiple prices",
+                "operationId": "setMultiplePrices",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetPriceRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetPriceResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "summary": "Get products",
+                "description": "Get all products",
+                "operationId": "getAllProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Set product",
+                "description": "Set a product",
+                "operationId": "setProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SetProductRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "description": "Error messages if the object could not be created/updated",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{model}": {
+            "get": {
+                "summary": "Get product by model",
+                "description": "Get product by model",
+                "operationId": "getProductByModel",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "model",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/multi/products": {
+            "post": {
+                "summary": "Set multiple products",
+                "description": "Set multiple products",
+                "operationId": "setMultipleProducts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetProductRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetProductResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/retailers": {
+            "get": {
+                "summary": "Get retailers",
+                "description": "Get all retailers",
+                "operationId": "getAllRetailers",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Retailers"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Set retailer",
+                "description": "Set a retailer",
+                "operationId": "setRetailer",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SetRetailerRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Retailer"
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data",
+                        "schema": {
+                            "description": "Error messages if the object could not be created/updated",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/retailers/{reference}": {
+            "get": {
+                "summary": "Get retailer by reference",
+                "description": "Get retailer by reference",
+                "operationId": "getRetailerByReference",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "reference",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Retailer"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/multi/retailers": {
+            "post": {
+                "summary": "Set multiple retailers",
+                "description": "Set multiple retailers",
+                "operationId": "setMultipleRetailers",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "The access token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetRetailerRequest"
+                        },
+                        "type": "object"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/MultipleSetRetailerResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Address": {
+            "properties": {
+                "reference": {
+                    "description": "Identifier",
+                    "type": "string"
+                },
+                "company": {
+                    "type": "string"
+                },
+                "contact_name": {
+                    "type": "string"
+                },
+                "contact_email": {
+                    "type": "string"
+                },
+                "tel": {
+                    "type": "string"
+                },
+                "address_1": {
+                    "type": "string"
+                },
+                "address_2": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "description": "ISO Code country 2 letters",
+                    "type": "string"
+                },
+                "vat_number": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ApiVersion": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "AuthToken": {
+            "properties": {
+                "access_token": {
+                    "description": "A token to be added as a query parameter to every subsequent API request. This token will authorize and authenticate your API requests.",
+                    "type": "string"
+                },
+                "expire_on": {
+                    "description": "A date-time indicating when the token will expire.",
+                    "type": "string"
+                },
+                "scope": {
+                    "description": "A scope for this token. This is currently always set to 'brand'.",
+                    "type": "string",
+                    "default": "Brand"
+                },
+                "token_type": {
+                    "description": "A type for this token. This is currently always set to 'Bearer'.",
+                    "type": "string",
+                    "default": "Bearer"
+                }
+            }
+        },
+        "AuthTokenRequest": {
+            "required": [
+                "client_id",
+                "client_secret",
+                "grant_type"
+            ],
+            "properties": {
+                "client_id": {
+                    "description": "A client id as provided in your Le New Black account.",
+                    "type": "string"
+                },
+                "client_secret": {
+                    "description": "A client secret as provided in your Le New Black account.",
+                    "type": "string"
+                },
+                "grant_type": {
+                    "description": "The authentication type being used. Must always be 'client_credentials'.",
+                    "type": "string",
+                    "default": "client_credentials"
+                }
+            },
+            "type": "object"
+        },
+        "Buyer": {
+            "properties": {
+                "email": {
+                    "description": "Identifier",
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string",
+                    "enum": [
+                        "mr",
+                        "ms",
+                        "miss"
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "Category": {
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "DRESSES"
+                },
+                "code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Collection": {
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "string"
+                },
+                "publish_time": {
+                    "type": "string"
+                },
+                "code": {
+                    "description": "Identifier",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "pending",
+                        "preview",
+                        "order",
+                        "view",
+                        "archived"
+                    ]
+                },
+                "privacy_level": {
+                    "type": "string",
+                    "enum": [
+                        "open",
+                        "restricted"
+                    ]
+                },
+                "enable_inventory": {
+                    "type": "boolean"
+                },
+                "image_url": {
+                    "type": "string",
+                    "example": "https://www.lenewblack.com/path/to/image.jpg"
+                },
+                "close_on": {
+                    "type": "string"
+                },
+                "delivery_start_on": {
+                    "type": "string"
+                },
+                "delivery_end_on": {
+                    "type": "string"
+                },
+                "payment_terms": {
+                    "type": "string"
+                },
+                "is_expired": {
+                    "type": "boolean"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Category"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "Collections": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Collection"
+            }
+        },
+        "InventoryEANItem": {
+            "properties": {
+                "ean13": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "in_stock": {
+                    "type": "integer"
+                },
+                "in_stock_update_time": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "InventoryItem": {
+            "properties": {
+                "ean13": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "sku": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "in_stock": {
+                    "type": "integer"
+                },
+                "in_stock_update_time": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "InventoryItems": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/InventoryItem"
+            }
+        },
+        "InventorySKUItem": {
+            "properties": {
+                "sku": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "in_stock": {
+                    "type": "integer"
+                },
+                "in_stock_update_time": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LinkToCategoryRequest": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "DRESSES"
+                },
+                "code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetCollectionRequest": {
+            "properties": {
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SetCollectionRequest"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetCollectionResponse": {
+            "properties": {
+                "metadata": {
+                    "$ref": "#/definitions/MultipleSetResponseMetadata"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MultipleSetCollectionResult"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetCollectionResult": {
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "success",
+                        "error"
+                    ]
+                },
+                "errors": {
+                    "description": "Error messages if the object could not be created/updated",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "result": {
+                    "$ref": "#/definitions/Collection"
+                }
+            }
+        },
+        "MultipleSetInventoryEANRequest": {
+            "properties": {
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/InventoryEANItem"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetInventoryResponse": {
+            "properties": {
+                "metadata": {
+                    "$ref": "#/definitions/MultipleSetResponseMetadata"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MultipleSetInventoryResult"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetInventoryResult": {
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "success",
+                        "error"
+                    ]
+                },
+                "errors": {
+                    "description": "Error messages if the object could not be created/updated",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "result": {
+                    "$ref": "#/definitions/InventoryItem"
+                }
+            }
+        },
+        "MultipleSetInventorySKURequest": {
+            "properties": {
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/InventorySKUItem"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetPriceRequest": {
+            "properties": {
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Price"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetPriceResponse": {
+            "properties": {
+                "metadata": {
+                    "$ref": "#/definitions/MultipleSetResponseMetadata"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MultipleSetPriceResult"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetPriceResult": {
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "success",
+                        "error"
+                    ]
+                },
+                "errors": {
+                    "description": "Error messages if the object could not be created/updated",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "result": {
+                    "$ref": "#/definitions/Price"
+                }
+            }
+        },
+        "MultipleSetProductRequest": {
+            "properties": {
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SetProductRequest"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetProductResponse": {
+            "properties": {
+                "metadata": {
+                    "$ref": "#/definitions/MultipleSetResponseMetadata"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MultipleSetProductResult"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetProductResult": {
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "success",
+                        "error"
+                    ]
+                },
+                "errors": {
+                    "description": "Error messages if the object could not be created/updated",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "result": {
+                    "$ref": "#/definitions/Product"
+                }
+            }
+        },
+        "MultipleSetResponseMetadata": {
+            "properties": {
+                "total_requests": {
+                    "type": "integer"
+                },
+                "total_success": {
+                    "type": "integer"
+                },
+                "total_errors": {
+                    "type": "integer"
+                }
+            }
+        },
+        "MultipleSetRetailerRequest": {
+            "properties": {
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SetRetailerRequest"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetRetailerResponse": {
+            "properties": {
+                "metadata": {
+                    "$ref": "#/definitions/MultipleSetResponseMetadata"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MultipleSetRetailerResult"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "MultipleSetRetailerResult": {
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "success",
+                        "error"
+                    ]
+                },
+                "errors": {
+                    "description": "Error messages if the object could not be created/updated",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "result": {
+                    "$ref": "#/definitions/Retailer"
+                }
+            }
+        },
+        "Price": {
+            "properties": {
+                "product_model": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "fabric_code": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "price_list_code": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "recommended_retail_price": {
+                    "type": "float",
+                    "example": "200.0"
+                },
+                "wholesale_price": {
+                    "type": "float",
+                    "example": "75.0"
+                }
+            }
+        },
+        "Prices": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Price"
+            }
+        },
+        "Product": {
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "string"
+                },
+                "category_code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                },
+                "category_name": {
+                    "type": "string"
+                },
+                "collection_code": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "collection_name": {
+                    "type": "string"
+                },
+                "sizing_code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                },
+                "sizing_name": {
+                    "type": "string"
+                },
+                "sizing_sizes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": "['S', 'M', 'L']"
+                },
+                "model": {
+                    "description": "Identifier",
+                    "type": "string",
+                    "example": "MODEL001"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "CLASSIC SHIRT"
+                },
+                "rank_in_category": {
+                    "type": "integer"
+                },
+                "has_core_variant": {
+                    "type": "boolean"
+                },
+                "is_published": {
+                    "type": "boolean"
+                },
+                "is_new": {
+                    "type": "boolean"
+                },
+                "is_top": {
+                    "type": "boolean"
+                },
+                "order_min": {
+                    "type": "integer"
+                },
+                "order_max": {
+                    "type": "integer"
+                },
+                "order_multiple": {
+                    "type": "integer"
+                },
+                "extra_1": {
+                    "type": "string"
+                },
+                "extra_2": {
+                    "type": "string"
+                },
+                "extra_3": {
+                    "type": "string"
+                },
+                "extra_4": {
+                    "type": "string"
+                },
+                "extra_5": {
+                    "type": "string"
+                },
+                "extra_6": {
+                    "type": "string"
+                },
+                "extra_7": {
+                    "type": "string"
+                },
+                "extra_8": {
+                    "type": "string"
+                },
+                "extra_9": {
+                    "type": "string"
+                },
+                "variants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Variant"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "Products": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Product"
+            }
+        },
+        "Retailer": {
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "reference": {
+                    "description": "Identifier",
+                    "type": "string"
+                },
+                "price_list_code": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "delivery_incoterm": {
+                    "type": "string",
+                    "enum": [
+                        "EXW",
+                        "FCA",
+                        "CPT",
+                        "CIP",
+                        "DAT",
+                        "DAP",
+                        "DDP",
+                        "FAS",
+                        "FOB",
+                        "CFR",
+                        "CIF"
+                    ]
+                },
+                "discount_rate": {
+                    "type": "float"
+                },
+                "discount_special_rate": {
+                    "type": "float"
+                },
+                "terms_of_delivery": {
+                    "type": "string"
+                },
+                "terms_of_payment": {
+                    "type": "string"
+                },
+                "extra_1": {
+                    "type": "string"
+                },
+                "extra_2": {
+                    "type": "string"
+                },
+                "extra_3": {
+                    "type": "string"
+                },
+                "extra_4": {
+                    "type": "string"
+                },
+                "extra_5": {
+                    "type": "string"
+                },
+                "store_address": {
+                    "$ref": "#/definitions/Address"
+                },
+                "billing_address": {
+                    "$ref": "#/definitions/Address"
+                },
+                "delivery_addresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Address"
+                    }
+                },
+                "buyers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Buyer"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "Retailers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Retailer"
+            }
+        },
+        "SKUItem": {
+            "properties": {
+                "ean13": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "sku": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "size_name": {
+                    "type": "string",
+                    "example": "XS"
+                },
+                "external_size_position": {
+                    "description": "Position in ERP sizing",
+                    "type": "integer"
+                }
+            }
+        },
+        "SetCollectionRequest": {
+            "properties": {
+                "code": {
+                    "description": "Identifier",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "pending",
+                        "preview",
+                        "order",
+                        "view",
+                        "archived"
+                    ]
+                },
+                "privacy_level": {
+                    "type": "string",
+                    "enum": [
+                        "open",
+                        "restricted"
+                    ]
+                },
+                "enable_inventory": {
+                    "type": "boolean"
+                },
+                "image_url": {
+                    "type": "string",
+                    "example": "https://www.lenewblack.com/path/to/image.jpg"
+                },
+                "close_on": {
+                    "type": "string"
+                },
+                "delivery_start_on": {
+                    "type": "string"
+                },
+                "delivery_end_on": {
+                    "type": "string"
+                },
+                "payment_terms": {
+                    "type": "string"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LinkToCategoryRequest"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "SetProductRequest": {
+            "properties": {
+                "category_code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                },
+                "category_name": {
+                    "type": "string"
+                },
+                "collection_code": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "collection_name": {
+                    "type": "string"
+                },
+                "sizing_code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                },
+                "sizing_name": {
+                    "type": "string"
+                },
+                "sizing_sizes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "model": {
+                    "description": "Identifier",
+                    "type": "string",
+                    "example": "MODEL001"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "CLASSIC SHIRT"
+                },
+                "is_published": {
+                    "type": "boolean"
+                },
+                "is_new": {
+                    "type": "boolean"
+                },
+                "is_top": {
+                    "type": "boolean"
+                },
+                "order_min": {
+                    "type": "integer"
+                },
+                "order_max": {
+                    "type": "integer"
+                },
+                "order_multiple": {
+                    "type": "integer"
+                },
+                "extra_1": {
+                    "type": "string"
+                },
+                "extra_2": {
+                    "type": "string"
+                },
+                "extra_3": {
+                    "type": "string"
+                },
+                "extra_4": {
+                    "type": "string"
+                },
+                "extra_5": {
+                    "type": "string"
+                },
+                "extra_6": {
+                    "type": "string"
+                },
+                "extra_7": {
+                    "type": "string"
+                },
+                "extra_8": {
+                    "type": "string"
+                },
+                "extra_9": {
+                    "type": "string"
+                },
+                "variants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SetVariantRequest"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "SetRetailerRequest": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "reference": {
+                    "description": "Identifier",
+                    "type": "string"
+                },
+                "price_list_code": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "delivery_incoterm": {
+                    "type": "string",
+                    "enum": [
+                        "EXW",
+                        "FCA",
+                        "CPT",
+                        "CIP",
+                        "DAT",
+                        "DAP",
+                        "DDP",
+                        "FAS",
+                        "FOB",
+                        "CFR",
+                        "CIF"
+                    ]
+                },
+                "discount_rate": {
+                    "type": "float"
+                },
+                "discount_special_rate": {
+                    "type": "float"
+                },
+                "terms_of_delivery": {
+                    "type": "string"
+                },
+                "terms_of_payment": {
+                    "type": "string"
+                },
+                "extra_1": {
+                    "type": "string"
+                },
+                "extra_2": {
+                    "type": "string"
+                },
+                "extra_3": {
+                    "type": "string"
+                },
+                "extra_4": {
+                    "type": "string"
+                },
+                "extra_5": {
+                    "type": "string"
+                },
+                "store_address": {
+                    "$ref": "#/definitions/Address"
+                },
+                "billing_address": {
+                    "$ref": "#/definitions/Address"
+                },
+                "delivery_addresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Address"
+                    }
+                },
+                "buyers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Buyer"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "SetSKUItemRequest": {
+            "properties": {
+                "ean13": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "sku": {
+                    "description": "Unique",
+                    "type": "string"
+                },
+                "size_name": {
+                    "type": "string"
+                },
+                "external_size_position": {
+                    "type": "string"
+                }
+            }
+        },
+        "SetVariantRequest": {
+            "properties": {
+                "fabric_code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                },
+                "fabric_name": {
+                    "type": "string",
+                    "example": "navy"
+                },
+                "fabric_color_code": {
+                    "type": "string"
+                },
+                "fabric_color_name": {
+                    "type": "string"
+                },
+                "is_available": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "is_blocked": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "is_core": {
+                    "type": "boolean"
+                },
+                "reference": {
+                    "type": "string",
+                    "example": "ABC101"
+                },
+                "care_instruction": {
+                    "type": "string"
+                },
+                "composition": {
+                    "type": "string"
+                },
+                "country_of_origin": {
+                    "type": "string"
+                },
+                "customs_code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fabric_print": {
+                    "type": "string"
+                },
+                "lining": {
+                    "type": "string"
+                },
+                "made_in": {
+                    "type": "string",
+                    "example": "Spain"
+                },
+                "dimensions": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "string"
+                },
+                "available_on": {
+                    "type": "string",
+                    "example": "2016-11-04"
+                },
+                "show_looks": {
+                    "type": "string"
+                },
+                "showroom_availability": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "special_notice": {
+                    "type": "string"
+                },
+                "skus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SetSKUItemRequest"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "Variant": {
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "string"
+                },
+                "fabric_code": {
+                    "description": "Foreign Key / Identifier",
+                    "type": "string"
+                },
+                "fabric_name": {
+                    "type": "string",
+                    "example": "navy"
+                },
+                "fabric_color_code": {
+                    "type": "string"
+                },
+                "fabric_color_name": {
+                    "type": "string"
+                },
+                "fabric_image_url": {
+                    "type": "string",
+                    "example": "https://www.lenewblack.com/path/to/image.png"
+                },
+                "is_available": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "is_blocked": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "is_core": {
+                    "type": "boolean"
+                },
+                "reference": {
+                    "type": "string",
+                    "example": "ABC101"
+                },
+                "care_instruction": {
+                    "type": "string"
+                },
+                "composition": {
+                    "type": "string"
+                },
+                "country_of_origin": {
+                    "type": "string"
+                },
+                "customs_code": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fabric_print": {
+                    "type": "string"
+                },
+                "lining": {
+                    "type": "string"
+                },
+                "made_in": {
+                    "type": "string",
+                    "example": "Spain"
+                },
+                "dimensions": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "string"
+                },
+                "available_on": {
+                    "type": "string",
+                    "example": "2016-11-04"
+                },
+                "show_looks": {
+                    "type": "string"
+                },
+                "showroom_availability": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "special_notice": {
+                    "type": "string"
+                },
+                "image_1_url": {
+                    "type": "string",
+                    "example": "https://www.lenewblack.com/path/to/image.png"
+                },
+                "image_2_url": {
+                    "type": "string",
+                    "example": "https://www.lenewblack.com/path/to/image.png"
+                },
+                "image_3_url": {
+                    "type": "string",
+                    "example": "https://www.lenewblack.com/path/to/image.png"
+                },
+                "image_4_url": {
+                    "type": "string",
+                    "example": "https://www.lenewblack.com/path/to/image.png"
+                },
+                "prices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/VariantPrice"
+                    }
+                },
+                "skus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SKUItem"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "VariantPrice": {
+            "properties": {
+                "price_list_code": {
+                    "description": "Foreign Key",
+                    "type": "string"
+                },
+                "recommended_retail_price": {
+                    "type": "float",
+                    "example": "200.0"
+                },
+                "wholesale_price": {
+                    "type": "float",
+                    "example": "75.0"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "wholesale"
+        }
+    ]
+}
