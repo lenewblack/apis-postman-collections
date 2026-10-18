@@ -18,6 +18,18 @@ Use these collections to explore, test and integrate LNB APIs directly from Post
 
 ---
 
+## OpenAPI files by version
+
+The [openapi](./openapi) folder keeps the file of every published version of an API, one folder per API, so you can compare a version with your integration or generate a client for it. The collection files above always follow the latest version.
+
+| API | Folder | Versions |
+|---|---|---|
+| **Wholesale v2 API** | [openapi/wholesale-v2](./openapi/wholesale-v2) | 2.0 (2018) to the latest |
+
+Files are named after the version they describe: `openapi-<api>-<version>.json` for OpenAPI 3.1 documents, `swagger-<api>-<version>.json` for the older Swagger 2.0 ones. The release notes of each version are on the [Developer Portal](https://developer.lenewblack.com).
+
+---
+
 ## Prerequisites
 
 - [Postman](https://www.postman.com/downloads/) installed (desktop app recommended)
