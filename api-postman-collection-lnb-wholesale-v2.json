@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Le New Black Wholesale API v2",
-    "version": "2.31.0",
+    "version": "2.32.0",
     "description": "Complete Wholesale API v2 documentation"
   },
   "servers": [
@@ -4214,6 +4214,14 @@
             }
           },
           {
+            "name": "page",
+            "in": "query",
+            "description": "The page to fetch (500 retailers per page, starts at page 1)",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "name",
             "in": "query",
             "description": "Retailer filter: name",
@@ -4520,20 +4528,33 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "retailers_collections": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "retailer_reference": {
-                            "type": "string"
-                          },
-                          "collection_code": {
-                            "type": "string"
-                          }
-                        }
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "create_time": {
+                        "description": "Creation timestamp in UTC (ISO 8601)",
+                        "type": "string"
+                      },
+                      "update_time": {
+                        "description": "Last update timestamp in UTC (ISO 8601)",
+                        "type": "string"
+                      },
+                      "collection_code": {
+                        "description": "Collection code",
+                        "type": "string"
+                      },
+                      "collection_name": {
+                        "description": "Collection name",
+                        "type": "string"
+                      },
+                      "retailer_reference": {
+                        "description": "Retailer reference",
+                        "type": "string"
+                      },
+                      "retailer_name": {
+                        "description": "Retailer name",
+                        "type": "string"
                       }
                     }
                   }
@@ -4735,20 +4756,33 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "retailers_sales_catalogs": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "retailer_reference": {
-                            "type": "string"
-                          },
-                          "sales_catalog_code": {
-                            "type": "string"
-                          }
-                        }
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "create_time": {
+                        "description": "Creation timestamp in UTC (ISO 8601)",
+                        "type": "string"
+                      },
+                      "update_time": {
+                        "description": "Last update timestamp in UTC (ISO 8601)",
+                        "type": "string"
+                      },
+                      "sales_catalog_code": {
+                        "description": "Sales catalog code",
+                        "type": "string"
+                      },
+                      "sales_catalog_name": {
+                        "description": "Sales catalog name",
+                        "type": "string"
+                      },
+                      "retailer_reference": {
+                        "description": "Retailer reference",
+                        "type": "string"
+                      },
+                      "retailer_name": {
+                        "description": "Retailer name",
+                        "type": "string"
                       }
                     }
                   }
@@ -5139,6 +5173,14 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page to fetch (500 sales documents per page, starts at page 1)",
+            "schema": {
+              "type": "integer"
             }
           },
           {
@@ -8177,7 +8219,7 @@
             "example": 10
           },
           "order_scope_order_mode": {
-            "description": "Deprecated since 2.27.0 — removed in 2.32.0",
+            "description": "Deprecated since 2.27.0 — removed in 2.33.0",
             "deprecated": true,
             "type": "string",
             "enum": [
@@ -8187,17 +8229,24 @@
             ]
           },
           "order_scope_amount_minimum": {
+            "description": "Tier condition on the order subtotal before promotions, 0 meaning no condition",
             "type": "number"
           },
           "order_scope_amount_maximum": {
+            "description": "Tier condition on the order subtotal before promotions, 0 meaning no condition",
             "type": "number"
           },
           "order_scope_product_minimum": {
-            "description": "Deprecated since 2.27.0 — removed in 2.32.0",
+            "description": "Deprecated since 2.27.0 — removed in 2.33.0",
             "deprecated": true,
             "type": "integer"
           },
           "order_scope_quantity_minimum": {
+            "description": "Tier condition on the pieces of the order, 0 meaning no condition",
+            "type": "integer"
+          },
+          "order_scope_quantity_maximum": {
+            "description": "Tier condition on the pieces of the order, 0 meaning no condition",
             "type": "integer"
           },
           "product_scope_collection_code": {
@@ -8217,6 +8266,13 @@
                 "WHITE",
                 "RED"
               ]
+            }
+          },
+          "retailer_scope": {
+            "description": "Brand references of the retailers the promotion is restricted to; empty means every retailer. A scoped retailer without a brand reference is not listed, so a promotion restricted to such retailers alone returns an empty list.",
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           }
         },
@@ -9429,6 +9485,33 @@
               "additionalProperties": {
                 "type": "string"
               }
+            }
+          },
+          "order_scope_quantity_minimum": {
+            "description": "Tier condition on the pieces of the order, 0 for no condition; absent leaves the stored value unchanged; null and negative values are refused",
+            "type": "integer",
+            "minimum": 0
+          },
+          "order_scope_quantity_maximum": {
+            "description": "Tier condition on the pieces of the order, 0 for no condition; absent leaves the stored value unchanged; null and negative values are refused; a maximum below the minimum is refused",
+            "type": "integer",
+            "minimum": 0
+          },
+          "order_scope_amount_minimum": {
+            "description": "Tier condition on the order subtotal before promotions, 0 for no condition; absent leaves the stored value unchanged; null and negative values are refused",
+            "type": "number",
+            "minimum": 0
+          },
+          "order_scope_amount_maximum": {
+            "description": "Tier condition on the order subtotal before promotions, 0 for no condition; absent leaves the stored value unchanged; null and negative values are refused; a maximum below the minimum is refused",
+            "type": "number",
+            "minimum": 0
+          },
+          "retailer_scope": {
+            "description": "Brand references of the retailers the promotion is restricted to. Absent leaves the stored scope unchanged; present and empty opens the promotion to every retailer; present and non-empty replaces the referenced retailers and keeps the retailers without a brand reference; an unknown reference refuses the write.",
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           }
         },
@@ -10943,6 +11026,17 @@
               "any",
               "current",
               "incoming"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "preview",
+              "order",
+              "view",
+              "closed",
+              "archived"
             ]
           }
         },
