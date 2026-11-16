@@ -9,12 +9,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Changed
-- **Wholesale v2 API** collection updated from API version 2.31.0 to 2.32.0: `retailer_scope` and `order_scope_quantity_maximum` on promotions, tier conditions written by `POST /promotions`
+- **Wholesale v2 API** collection updated from API version 2.31.0 to 2.33.0:
+    - 2.32.0: `retailer_scope` and `order_scope_quantity_maximum` on promotions, tier conditions written by `POST /promotions`
+    - 2.32.1: `access_status` and `access_role_level` on retailers list their accepted values, in the request and in the response
+    - 2.33.0: `discount_rate` on `POST /orders_archive`; `sales_order_reference` on `POST /orders` and `POST /orders_archive`; new sales document type `proforma`; `status_notification` on `POST /sales_documents`, `POST /multi/sales_documents` and `GET /sales_documents`; the sales document `type` lists its accepted values
 
 ### Added
-- `openapi/wholesale-v2/`: the file of every published **Wholesale v2 API** version, from 2.0 (2018) to 2.32.0, Swagger 2.0 up to 2.24.0 and OpenAPI 3.1 from 2.25.0
+- `openapi/wholesale-v2/`: the file of every published **Wholesale v2 API** version, from 2.0 (2018) to 2.33.0, Swagger 2.0 up to 2.24.0 and OpenAPI 3.1 from 2.25.0
 - **Wholesale v1 API** collection (`api-postman-collection-lnb-wholesale-v1.json`), OpenAPI 3.1
 - **Retail API** collection (`api-postman-collection-lnb-retail.json`), OpenAPI 3.1
+
+### Removed
+- **Wholesale v2 API** collection: `order_scope_order_mode` and `order_scope_product_minimum` on promotions, removed in API version 2.33.0 after their deprecation in 2.27.0
 
 ## [1.1.0] — 2026-10-17
 
